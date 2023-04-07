@@ -6,6 +6,9 @@ public class Person {
 	private String name;
 	private String lastname;
 
+	public Person() {
+	}
+
 	public Person(Routine routine, String name, String lastname) {
 		this.routine = routine;
 		this.name = name;

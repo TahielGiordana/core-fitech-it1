@@ -1,6 +1,7 @@
 package pojos;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Routine {
 
@@ -27,5 +28,18 @@ public class Routine {
 
 	public void setMachineSerialCodes(List<String> machineSerialCodes) {
 		this.machineSerialCodes = machineSerialCodes;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Routine routine = (Routine) o;
+		return name.equals(routine.name) && machineSerialCodes.equals(routine.machineSerialCodes);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, machineSerialCodes);
 	}
 }

@@ -5,6 +5,9 @@ public class Machine {
 	private String serialCode;
 	private String name;
 
+	public Machine() {
+	}
+
 	public Machine(String serialCode, String name) {
 		this.serialCode = serialCode;
 		this.name = name;
