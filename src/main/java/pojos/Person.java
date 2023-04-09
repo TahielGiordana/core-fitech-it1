@@ -38,5 +38,13 @@ public class Person {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Person{" +
+				"routine=" + routine +
+				", name='" + name + '\'' +
+				", lastname='" + lastname + '\'' +
+				'}';
+	}
 }
