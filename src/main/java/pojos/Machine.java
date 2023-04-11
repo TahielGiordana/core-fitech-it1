@@ -28,5 +28,12 @@ public class Machine {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Machine{" +
+				"serialCode='" + serialCode + '\'' +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

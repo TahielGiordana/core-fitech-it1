@@ -42,4 +42,12 @@ public class Routine {
 	public int hashCode() {
 		return Objects.hash(name, machines);
 	}
+
+	@Override
+	public String toString() {
+		return "Routine{" +
+				"name='" + name + '\'' +
+				", machineSerialCodes=" + machineSerialCodes +
+				'}';
+	}
 }
