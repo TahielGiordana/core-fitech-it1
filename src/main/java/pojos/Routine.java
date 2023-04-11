@@ -7,11 +7,11 @@ public class Routine {
 
 	private String name;
 
-	private List<String> machineSerialCodes;
+	private List<Machine> machines;
 
-	public Routine(String name, List<String> machineSerialCodes) {
+	public Routine(String name, List<Machine> machines) {
 		this.name = name;
-		this.machineSerialCodes = machineSerialCodes;
+		this.machines = machines;
 	}
 
 	public String getName() {
@@ -22,12 +22,12 @@ public class Routine {
 		this.name = name;
 	}
 
-	public List<String> getMachineSerialCodes() {
-		return machineSerialCodes;
+	public List<Machine> getMachines() {
+		return machines;
 	}
 
-	public void setMachineSerialCodes(List<String> machineSerialCodes) {
-		this.machineSerialCodes = machineSerialCodes;
+	public void setMachines(List<Machine> machines) {
+		this.machines = machines;
 	}
 
 	@Override
@@ -35,11 +35,11 @@ public class Routine {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Routine routine = (Routine) o;
-		return name.equals(routine.name) && machineSerialCodes.equals(routine.machineSerialCodes);
+		return name.equals(routine.name) && machines.equals(routine.machines);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, machineSerialCodes);
+		return Objects.hash(name, machines);
 	}
 }
