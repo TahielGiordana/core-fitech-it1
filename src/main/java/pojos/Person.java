@@ -2,25 +2,15 @@ package pojos;
 
 public class Person {
 
-	private Routine routine;
 	private String name;
 	private String lastname;
 
 	public Person() {
 	}
 
-	public Person(Routine routine, String name, String lastname) {
-		this.routine = routine;
+	public Person(String name, String lastname) {
 		this.name = name;
 		this.lastname = lastname;
-	}
-
-	public Routine getRoutine() {
-		return routine;
-	}
-
-	public void setRoutine(Routine routine) {
-		this.routine = routine;
 	}
 
 	public String getName() {
@@ -38,5 +28,4 @@ public class Person {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	
 }
