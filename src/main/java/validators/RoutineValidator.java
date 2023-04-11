@@ -1,9 +1,5 @@
 package validators;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import interfaces.Validator;
 import pojos.Machine;
 import pojos.Person;
@@ -12,27 +8,20 @@ import services.RoutineFinder;
 
 public class RoutineValidator implements Validator {
 
-    private final RoutineFinder routineFinder;
+	private final RoutineFinder routineFinder;
 
-    public RoutineValidator(RoutineFinder routineFinder) {
-        this.routineFinder = routineFinder;
-    }
+	public RoutineValidator(RoutineFinder routineFinder) {
+		this.routineFinder = routineFinder;
+	}
 
-    @Override
+	// Metodo para validar si la maquina esta dentro de la rutina
+	@Override
 	public boolean validate(Person person, Machine machine) {
-        List<Routine> routines = this.routineFinder.findRoutines(person);
-        final List<String>[] serialCodes = new List[]{new ArrayList<>()};
-        if(!routines.isEmpty()){
-            String serialCode = machine.getSerialCode();
-            routines.forEach(routine -> {
-                serialCodes[0] = routine.getMachineSerialCodes().stream().filter(code -> code.equalsIgnoreCase(serialCode)).collect(Collectors.toList());
-            });
-            //Validation logic
-            return !serialCodes[0].isEmpty() && serialCodes[0].contains(serialCode);
-        }else{
-            System.out.println("No se encontro rutina para la persona ingresada");
-            return false;
-        }
+		Routine routine = routineFinder.getRoutineByPerson(person);
 
-    }
+		if (routine != null && routine.getMachines() != null && !routine.getMachines().isEmpty()) {
+			return routine.getMachines().stream().anyMatch(m -> m.getSerialCode().equals(machine.getSerialCode()));
+		}
+		return false;
+	}
 }
