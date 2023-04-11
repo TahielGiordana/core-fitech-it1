@@ -19,7 +19,7 @@ public class RoutineValidator implements Validator {
 	public boolean validate(Person person, Machine machine) {
 		Routine routine = routineFinder.getRoutineByPerson(person);
 
-		if (routine != null && routine.getMachines() != null && !routine.getMachines().isEmpty()) {
+		if (routine != null && routine.getMachines() != null) {
 			return routine.getMachines().stream().anyMatch(m -> m.getSerialCode().equals(machine.getSerialCode()));
 		}
 		return false;
