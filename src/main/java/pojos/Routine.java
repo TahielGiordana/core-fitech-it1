@@ -47,7 +47,7 @@ public class Routine {
 	public String toString() {
 		return "Routine{" +
 				"name='" + name + '\'' +
-				", machineSerialCodes=" + machineSerialCodes +
+				", machines=" + machines +
 				'}';
 	}
 }
