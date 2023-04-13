@@ -14,6 +14,9 @@ public class Routine {
 		this.machines = machines;
 	}
 
+	public Routine(){
+	}
+
 	public String getName() {
 		return name;
 	}
