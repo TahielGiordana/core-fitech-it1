@@ -1,5 +1,3 @@
-package main;
-
 import pojos.Machine;
 import pojos.Person;
 import services.RoutineFinder;
