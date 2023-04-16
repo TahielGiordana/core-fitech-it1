@@ -7,14 +7,12 @@ import services.PaymentFinder;
 
 public class PaymentValidator implements Validator {
 
-    private final PaymentFinder paymentFinder;
-
-    public PaymentValidator(PaymentFinder paymentFinder) {
-        this.paymentFinder = paymentFinder;
+    public PaymentValidator() {
     }
 
     @Override
     public boolean validate(Person person, Machine machine) {
-        return this.paymentFinder.paymentByPerson(person);
+        PaymentFinder paymentFinder = new PaymentFinder();
+        return paymentFinder.paymentByPerson(person);
     }
 }

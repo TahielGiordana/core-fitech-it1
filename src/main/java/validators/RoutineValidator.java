@@ -8,15 +8,13 @@ import services.RoutineFinder;
 
 public class RoutineValidator implements Validator {
 
-	private final RoutineFinder routineFinder;
-
-	public RoutineValidator(RoutineFinder routineFinder) {
-		this.routineFinder = routineFinder;
+	public RoutineValidator() {
 	}
 
 	@Override
 	public boolean validate(Person person, Machine machine) {
-		Routine routineByPerson = this.routineFinder.getRoutineByPerson(person);
+		RoutineFinder routineFinder = new RoutineFinder();
+		Routine routineByPerson = routineFinder.getRoutineByPerson(person);
 		return routineByPerson != null && routineByPerson.getMachine().getCode().equalsIgnoreCase(machine.getCode());
 	}
 
