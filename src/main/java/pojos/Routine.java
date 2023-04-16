@@ -1,36 +1,35 @@
 package pojos;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Routine {
 
-	private String name;
+	private String exercise;
 
-	private List<Machine> machines;
+	private Machine machine;
 
-	public Routine(String name, List<Machine> machines) {
-		this.name = name;
-		this.machines = machines;
+	public Routine() {
 	}
 
-	public Routine(){
+	public Routine(String name, Machine machine) {
+		this.exercise = name;
+		this.machine = machine;
 	}
 
 	public String getName() {
-		return name;
+		return exercise;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.exercise = name;
 	}
 
-	public List<Machine> getMachines() {
-		return machines;
+	public Machine getMachine() {
+		return machine;
 	}
 
-	public void setMachines(List<Machine> machines) {
-		this.machines = machines;
+	public void setMachine(Machine machine) {
+		this.machine = machine;
 	}
 
 	@Override
@@ -38,19 +37,19 @@ public class Routine {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Routine routine = (Routine) o;
-		return name.equals(routine.name) && machines.equals(routine.machines);
+		return exercise.equals(routine.exercise) && machine.equals(routine.machine);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, machines);
+		return Objects.hash(exercise, machine);
 	}
 
 	@Override
 	public String toString() {
 		return "Routine{" +
-				"name='" + name + '\'' +
-				", machines=" + machines +
+				"name='" + exercise + '\'' +
+				", machine=" + machine +
 				'}';
 	}
 }

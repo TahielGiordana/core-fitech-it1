@@ -14,14 +14,10 @@ public class RoutineValidator implements Validator {
 		this.routineFinder = routineFinder;
 	}
 
-	// Metodo para validar si la maquina esta dentro de la rutina
 	@Override
 	public boolean validate(Person person, Machine machine) {
-		Routine routine = routineFinder.getRoutineByPerson(person);
-
-		if (routine != null && routine.getMachines() != null) {
-			return routine.getMachines().stream().anyMatch(m -> m.getSerialCode().equals(machine.getSerialCode()));
-		}
-		return false;
+		Routine routineByPerson = this.routineFinder.getRoutineByPerson(person);
+		return routineByPerson != null && routineByPerson.getMachine().getCode().equalsIgnoreCase(machine.getCode());
 	}
+
 }

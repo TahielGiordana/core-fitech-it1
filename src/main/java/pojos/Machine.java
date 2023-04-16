@@ -2,23 +2,23 @@ package pojos;
 
 public class Machine {
 
-	private String serialCode;
+	private String code;
 	private String name;
 
 	public Machine() {
 	}
 
-	public Machine(String serialCode, String name) {
-		this.serialCode = serialCode;
+	public Machine(String code, String name) {
+		this.code = code;
 		this.name = name;
 	}
 
-	public String getSerialCode() {
-		return serialCode;
+	public String getCode() {
+		return code;
 	}
 
-	public void setSerialCode(String serialCode) {
-		this.serialCode = serialCode;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getName() {
@@ -32,7 +32,7 @@ public class Machine {
 	@Override
 	public String toString() {
 		return "Machine{" +
-				"serialCode='" + serialCode + '\'' +
+				"code='" + code + '\'' +
 				", name='" + name + '\'' +
 				'}';
 	}
