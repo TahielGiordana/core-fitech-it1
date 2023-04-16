@@ -1,3 +1,5 @@
+package init;
+
 import interfaces.Validator;
 import pojos.Machine;
 import pojos.Person;
