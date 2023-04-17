@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PaymentFinder {
-    public boolean paymentByPerson(Person person){
+    public boolean findPayment(Person person){
         List<Person> search = this.search(person);
         if(!search.isEmpty()){
             return search.get(0).isFeedPaid();

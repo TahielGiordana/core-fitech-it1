@@ -13,6 +13,6 @@ public class PaymentValidator implements Validator {
     @Override
     public boolean validate(Person person, Machine machine) {
         PaymentFinder paymentFinder = new PaymentFinder();
-        return paymentFinder.paymentByPerson(person);
+        return paymentFinder.findPayment(person);
     }
 }
