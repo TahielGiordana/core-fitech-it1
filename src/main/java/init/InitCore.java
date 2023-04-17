@@ -19,8 +19,9 @@ public class InitCore {
         this.validatorSequence = new ValidatorSequence(classes);
     }
 
-    public ValidatorSequence getValidators(){
-        return this.validatorSequence;
+
+    public boolean executeValidators(Person person, Machine machine){
+        return this.validatorSequence.executeValidators(person, machine);
     }
 
 
@@ -34,7 +35,7 @@ public class InitCore {
         Machine machine1 =new Machine("A2", "bicicleta");
 
 
-        boolean b = core.getValidators().executeValidators(person1, machine1);
+        boolean b = core.executeValidators(person1,machine1);
 
         System.out.println("se corren todos los validadores disponibles: " + b);
 
