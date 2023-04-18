@@ -3,7 +3,6 @@ package services;
 import interfaces.Validator;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +14,7 @@ public class ValidatorFinder {
     public Set<Validator> findClasses() {
         Set<Validator> result = new HashSet<>();
         File[] files = getFiles();
-        if(files!=null && files.length > 0){
+        if(files!=null){
             for (File f : files) {
                 if (f.getName().endsWith(".class")){
                     getClase(result, f);
@@ -37,7 +36,7 @@ public class ValidatorFinder {
                 result.add((Validator) cls.newInstance());
             }
         } catch (Exception e) {
-            System.out.println("ocurrio un problema al instanciar las clases");;
+            System.out.println("ocurrio un problema al instanciar las clases");
         }
     }
 
@@ -45,7 +44,7 @@ public class ValidatorFinder {
         File[] files = new File[0];
         try{
             File file = new File("");
-            String path = file.getAbsolutePath()+File.separator+"build"+File.separator+"classes"+File.separator+"java"+File.separator+"main"+File.separator+"validators";
+            String path = file.getAbsolutePath()+File.separator+"validators";
             System.out.println("path: " + path);
             files = new File(path).listFiles();
             assert files != null;
