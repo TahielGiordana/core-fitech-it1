@@ -8,9 +8,10 @@ import services.RoutineFinder;
 
 public class RoutineValidator implements Validator {
 
-	public RoutineValidator() {
+	RoutineFinder routineFinder;
+	public RoutineValidator(RoutineFinder routineFinder) {
+		this.routineFinder = routineFinder;
 	}
-
 	@Override
 	public boolean validate(Person person, Machine machine) {
 		RoutineFinder routineFinder = new RoutineFinder();
