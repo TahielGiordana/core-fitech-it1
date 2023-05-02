@@ -11,7 +11,7 @@ public class PaymentValidator implements Validator {
     }
 
     @Override
-    public boolean validate(Person person, Machine machine) {
+    public boolean validate(String person, String machine) {
         PaymentFinder paymentFinder = new PaymentFinder();
         return paymentFinder.findPayment(person);
     }

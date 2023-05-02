@@ -5,5 +5,5 @@ import pojos.Person;
 
 public interface Validator {
 
-	boolean validate(Person person, Machine machine);
+	boolean validate(String username, String codeMachine);
 }
