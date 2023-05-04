@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PaymentFinder {
     public boolean findPayment(String person){

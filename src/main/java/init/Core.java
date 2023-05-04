@@ -3,7 +3,6 @@ package init;
 import interfaces.Validator;
 import pojos.Machine;
 import pojos.Person;
-import pojos.Routine;
 import services.ValidatorFinder;
 import services.ValidatorSequence;
 
