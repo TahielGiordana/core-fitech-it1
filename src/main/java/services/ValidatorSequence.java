@@ -1,8 +1,6 @@
 package services;
 
 import interfaces.Validator;
-import pojos.Machine;
-import pojos.Person;
 
 import java.util.Set;
 
@@ -13,12 +11,12 @@ public class ValidatorSequence {
         this.validatorSet = validatorSet;
     }
 
-    public boolean executeValidators(Person person, Machine machine) {
+    public boolean executeValidators(String userName, String machineCode) {
         System.out.println("validadores disponibles: " + this.validatorSet.size());
         boolean success = this.validatorSet.size() > 0;
         for (Validator v : this.validatorSet) {
-            System.out.println("se valida con: " + v + " con resultado: " + v.validate(person.getUsername(), machine.getCode()));
-            success = success && v.validate(person.getUsername(), machine.getCode());
+            System.out.println("se valida con: " + v.getClass().getName() + " con resultado: " + v.validate(userName, machineCode));
+            success = success && v.validate(userName, machineCode);
         }
         return success;
     }
