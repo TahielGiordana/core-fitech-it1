@@ -18,9 +18,9 @@ public class Core{
     }
 
 
-    public boolean executeValidators(String userName, String machineCode){
+    public boolean validate(String userName, String machineCode){
         System.out.println("inicio con datos: "+ userName + "- maquina - " + machineCode);
-        return this.validatorSequence.executeValidators(userName, machineCode);
+        return this.validatorSequence.validate(userName, machineCode);
     }
 
 
@@ -29,7 +29,7 @@ public class Core{
         File file = new File("");
         System.out.println("path del file en el main" + file.getAbsolutePath());
         Core core = new Core(file.getAbsolutePath() + "validators");
-        core.executeValidators("Tahiel", "BicicletaFija");
+        core.validate("Tahiel", "BicicletaFija");
 
     }
 
