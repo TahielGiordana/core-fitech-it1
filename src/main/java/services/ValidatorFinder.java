@@ -35,13 +35,14 @@ public class ValidatorFinder {
             System.out.println("classLoader: " + classLoader.getClass());
             Class<?> pluginClass = classLoader.loadClass("validate.RoutineValidator");
             System.out.println("pluginClass: " + pluginClass);
-            Object classInstance = pluginClass.newInstance();
-            System.out.println(classInstance);
+            System.out.println(pluginClass);
            //Class<?> cls = Class.forName("validators"+"."+className);
-            if (!Validator.class.isAssignableFrom((Class<?>) classInstance)){
+            if (!Validator.class.isAssignableFrom(pluginClass)){
                 System.out.println("no asignable");
             }else{
-                result.add((Validator) classInstance);
+                System.out.println("puede asignarse");
+                result.add((Validator) pluginClass.newInstance());
+                //result.add(pluginClass);
             }
         } catch (Exception e) {
             System.out.println("ocurrio un problema al instanciar las clases");
