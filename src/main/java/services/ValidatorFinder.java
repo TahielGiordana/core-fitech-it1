@@ -5,8 +5,9 @@ import interfaces.Validator;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class ValidatorFinder {
 
@@ -29,23 +30,41 @@ public class ValidatorFinder {
     }
 
     private void getClase(Set<Validator> result, File f) {
-        //String className = f.getName().substring(0, f.getName().lastIndexOf('.'));
-        try {
+        try{
+            JarFile jar = new JarFile(f);
+            Enumeration<JarEntry> entries = jar.entries();
+
             URLClassLoader classLoader = new URLClassLoader(new URL[]{f.toURI().toURL()});
-            System.out.println("classLoader: " + classLoader.getClass());
-            Class<?> pluginClass = classLoader.loadClass("validate.RoutineValidator");
-            System.out.println("pluginClass: " + pluginClass);
-            System.out.println(pluginClass);
-           //Class<?> cls = Class.forName("validators"+"."+className);
-            if (!Validator.class.isAssignableFrom(pluginClass)){
-                System.out.println("no asignable");
-            }else{
-                System.out.println("puede asignarse");
-                result.add((Validator) pluginClass.newInstance());
-                //result.add(pluginClass);
+
+            List<Class<?>> classes = new ArrayList<>();
+
+            while(entries.hasMoreElements()){
+                JarEntry jarEntry = entries.nextElement();
+                if(jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")){
+                    continue;
+                }
+                String className = jarEntry.getName().substring(0,jarEntry.getName().length()-6);
+                className = className.replace('/','.');
+                classes.add( classLoader.loadClass(className));
             }
+            System.out.println("Lista de Clases Encontradas:\n  " + classes);
+
+            classes.forEach(possibleValidator -> {
+                if (!Validator.class.isAssignableFrom(possibleValidator) || possibleValidator.isInterface()){
+                    System.out.println(possibleValidator + " No asignable");
+                }else{
+                    System.out.println(possibleValidator + " Asignable");
+                    try {
+                        result.add((Validator) possibleValidator.newInstance());
+                    } catch (InstantiationException e) {
+                        throw new RuntimeException(e);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
         } catch (Exception e) {
-            System.out.println("ocurrio un problema al instanciar las clases");
+            System.out.println("Ocurrió un problema al instanciar las clases");
         }
     }
 
@@ -54,7 +73,7 @@ public class ValidatorFinder {
         try{
             File file = new File("");
             System.out.println("path del file: " + file.getAbsolutePath());
-            files = new File(file.getAbsolutePath()+File.separator+"files").listFiles();
+            files = new File(file.getAbsolutePath()+File.separator+"validators").listFiles();
             assert files != null;
             System.out.println("cantidad de archivos listados: "+files.length);
         }catch(Exception e){
