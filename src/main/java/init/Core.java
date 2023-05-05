@@ -29,7 +29,7 @@ public class Core{
         File file = new File("");
         System.out.println("path del file en el main" + file.getAbsolutePath());
         Core core = new Core(file.getAbsolutePath() + "validators");
-        core.validate("Tahiel", "BicicletaFija");
+        core.validate("Tahiel", "Bicicleta1");
 
     }
 
