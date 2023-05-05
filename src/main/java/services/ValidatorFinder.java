@@ -14,7 +14,7 @@ public class ValidatorFinder {
     public ValidatorFinder() {
     }
 
-    public Set<Validator> findValidatorsClasses(String path) {
+    public Set<Validator> findValidators(String path) {
         Set<Validator> result = new HashSet<>();
         File[] files = getFiles();
         if(files!=null){

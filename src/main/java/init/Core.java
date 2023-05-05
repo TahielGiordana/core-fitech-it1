@@ -9,12 +9,12 @@ import java.util.Set;
 
 public class Core{
 
-    private final ValidatorSequence validatorSequence;
+    private final Validator validatorSequence;
 
     public Core(String path){
         ValidatorFinder validatorFinder = new ValidatorFinder();
-        Set<Validator> classes = validatorFinder.findValidatorsClasses(path);
-        this.validatorSequence = new ValidatorSequence(classes);
+        Set<Validator> validators = validatorFinder.findValidators(path);
+        this.validatorSequence = new ValidatorSequence(validators);
     }
 
 
