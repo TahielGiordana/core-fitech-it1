@@ -21,7 +21,7 @@ public class ValidatorFinder {
             for (File f : files) {
                 if (f.getName().endsWith(".jar")){
                     System.out.println("file " + f.getName());
-                    getClase(result, f);
+                    getValidator(result, f);
                 }
             }
         }
@@ -29,7 +29,7 @@ public class ValidatorFinder {
         return result;
     }
 
-    private void getClase(Set<Validator> result, File f) {
+    private void getValidator(Set<Validator> result, File f) {
         try{
             JarFile jar = new JarFile(f);
             Enumeration<JarEntry> entries = jar.entries();
