@@ -1,36 +1,49 @@
 package init;
 
+import interfaces.Observable;
+import interfaces.Observer;
 import interfaces.Validator;
 import services.ValidatorFinder;
 import services.ValidatorSequence;
 
-import java.io.File;
+import java.util.HashSet;
 import java.util.Set;
 
-public class Core{
+public class Core implements Observable {
 
+    private HashSet<Observer> observers;
     private final Validator validatorSequence;
+    private boolean validationResult;
 
     public Core(String path){
         ValidatorFinder validatorFinder = new ValidatorFinder();
         Set<Validator> validators = validatorFinder.findValidators(path);
         this.validatorSequence = new ValidatorSequence(validators);
+        this.validationResult = false;
     }
 
-
-    public boolean validate(String userName, String machineCode){
+    public void validate(String userName, String machineCode){
         System.out.println("inicio con datos: "+ userName + "- maquina - " + machineCode);
-        return this.validatorSequence.validate(userName, machineCode);
+        this.validationResult = this.validatorSequence.validate(userName, machineCode);
+        notifyObservers();
     }
 
+    public boolean getValidationResult(){
+        return this.validationResult;
+    }
 
-    public static void main(String[] args) {
+    public void addObserver(Observer observer){
+        observers.add(observer);
+    }
 
-        File file = new File("");
-        System.out.println("path del file en el main" + file.getAbsolutePath());
-        Core core = new Core(file.getAbsolutePath() + "validators");
-        core.validate("Tahiel", "Bicicleta1");
+    public void removeObserver(Observer observer){
+        observers.remove(observer);
+    }
 
+    public void notifyObservers(){
+        for(Observer observer : observers){
+            observer.update();
+        }
     }
 
 }
