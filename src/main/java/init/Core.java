@@ -20,6 +20,7 @@ public class Core implements Observable {
         Set<Validator> validators = validatorFinder.findValidators(path);
         this.validatorSequence = new ValidatorSequence(validators);
         this.validationResult = false;
+        this.observers = new HashSet<>();
     }
 
     public void validate(String userName, String machineCode){
