@@ -1,28 +1,22 @@
-package init;
+package services;
 
 import interfaces.Observable;
 import interfaces.Observer;
-import interfaces.Validator;
-import services.ValidatorFinder;
-import services.ValidatorSequence;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Core implements Observable {
-
-    private HashSet<Observer> observers;
-    private final Validator validatorSequence;
+public class ValidatorManager implements Observable {
+    private Set<Observer> observers;
     private boolean validationResult;
     private String actualUserName;
     private String actualMachineCode;
+    private ValidatorClasses validatorClasses;
 
-    public Core(String path){
-        ValidatorFinder validatorFinder = new ValidatorFinder();
-        Set<Validator> validators = validatorFinder.findValidators(path);
-        this.validatorSequence = new ValidatorSequence(validators);
-        this.validationResult = false;
+    public ValidatorManager(ValidatorClasses validatorClasses) {
         this.observers = new HashSet<>();
+        this.validatorClasses = validatorClasses;
+        this.validationResult = false;
         this.actualUserName = "";
         this.actualMachineCode = "";
     }
@@ -31,7 +25,7 @@ public class Core implements Observable {
         System.out.println("inicio con datos: "+ userName + "- maquina - " + machineCode);
         this.actualUserName = userName;
         this.actualMachineCode = machineCode;
-        this.validationResult = this.validatorSequence.validate(userName, machineCode);
+        this.validationResult = this.validatorClasses.validate(userName, machineCode);
         notifyObservers();
     }
 
@@ -60,5 +54,4 @@ public class Core implements Observable {
             observer.update();
         }
     }
-
 }
