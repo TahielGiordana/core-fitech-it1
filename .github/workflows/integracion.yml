@@ -30,11 +30,9 @@ jobs:
       - name: Create deployment status
         uses: chrnorm/deployment-status@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TEST_TOKEN }}
           state: success
           environment-url: ${{ github.server_url }}/${{ github.repository }}/jobs/${{ env.JOB_ID }}/artifacts/test/reports/index.html
           log-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.GITHUB_RUN_ID }}
           description: Test report is ready
           auto-inactive: true
-        if: ${{ github.ref == 'refs/heads/develop' }}
-
