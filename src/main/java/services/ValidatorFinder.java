@@ -1,6 +1,8 @@
 package services;
 
 import interfaces.Validator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.net.URL;
@@ -11,6 +13,9 @@ import java.util.jar.JarFile;
 
 public class ValidatorFinder {
 
+    private Logger log = LogManager.getLogger("ValidatorFinder");
+
+
     public ValidatorFinder() {
     }
 
@@ -20,12 +25,12 @@ public class ValidatorFinder {
         if(files!=null){
             for (File f : files) {
                 if (f.getName().endsWith(".jar")){
-                    System.out.println("file " + f.getName());
+                    log.info("file encontrado: " + f.getName());
                     getValidator(result, f);
                 }
             }
         }
-        System.out.println("Cantidad de clases instanciadas: "+ result.size());
+        log.info("Cantidad de clases instanciadas: "+ result.size());
         return result;
     }
 
@@ -47,24 +52,26 @@ public class ValidatorFinder {
                 className = className.replace('/','.');
                 classes.add( classLoader.loadClass(className));
             }
-            System.out.println("Lista de Clases Encontradas:\n  " + classes);
+            log.info("Lista de Clases Encontradas: size {} - clases {} ", classes.size(), classes);
 
             classes.forEach(possibleValidator -> {
                 if (!Validator.class.isAssignableFrom(possibleValidator) || possibleValidator.isInterface()){
-                    System.out.println(possibleValidator + " No asignable");
+                    log.warn("{} No asignable", possibleValidator.getName());
                 }else{
-                    System.out.println(possibleValidator + " Asignable");
+                    log.info("{} Asignable", possibleValidator.getName());
                     try {
                         result.add((Validator) possibleValidator.newInstance());
                     } catch (InstantiationException e) {
+                        log.error("InstantiationException: {}", e.getMessage());
                         throw new RuntimeException(e);
                     } catch (IllegalAccessException e) {
+                        log.error("IllegalAccessException: {}", e.getMessage());
                         throw new RuntimeException(e);
                     }
                 }
             });
         } catch (Exception e) {
-            System.out.println("Ocurrió un problema al instanciar las clases");
+            log.error("Excepcion al instanciar las clases: {}", e.getMessage());
         }
     }
 
@@ -72,12 +79,12 @@ public class ValidatorFinder {
         File[] files = new File[0];
         try{
             File file = new File("");
-            System.out.println("path del file: " + file.getAbsolutePath());
+            log.info("path del file: " + file.getAbsolutePath());
             files = new File(file.getAbsolutePath()+File.separator+"validators").listFiles();
             assert files != null;
-            System.out.println("cantidad de archivos listados: "+files.length);
+            log.info("cantidad de archivos listados: "+files.length);
         }catch(Exception e){
-            System.out.println("no se pudo leer lista de archivos");
+            log.error("no se pudo leer lista de archivos");
         }
         return files;
     }

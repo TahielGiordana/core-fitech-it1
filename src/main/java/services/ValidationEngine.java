@@ -1,17 +1,24 @@
 package services;
 
-import interfaces.Observable;
-import interfaces.Observer;
-
+//java
 import java.util.HashSet;
 import java.util.Set;
 
+//custom imports
+import interfaces.Observable;
+import interfaces.Observer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 public class ValidationEngine implements Observable {
-    private Set<Observer> observers;
+
+    private Logger log = LogManager.getLogger("ValidationEngine");
+    private final Set<Observer> observers;
     private boolean validationResult;
     private String actualUserName;
     private String actualMachineCode;
-    private ValidatorClasses validatorClasses;
+    private final ValidatorClasses validatorClasses;
 
     public ValidationEngine(ValidatorClasses validatorClasses) {
         this.observers = new HashSet<>();
@@ -22,11 +29,12 @@ public class ValidationEngine implements Observable {
     }
 
     public void validate(String userName, String machineCode){
-        System.out.println("inicio con datos: "+ userName + "- maquina - " + machineCode);
+        log.info("init metodo validate con datos: userName {} - maquina {}", userName, machineCode);
         this.actualUserName = userName;
         this.actualMachineCode = machineCode;
         this.validationResult = this.validatorClasses.validate(userName, machineCode);
         notifyObservers();
+        log.info("fin metodo validate");
     }
 
     public boolean getValidationResult(){
@@ -42,6 +50,7 @@ public class ValidationEngine implements Observable {
     }
 
     public void addObserver(Observer observer){
+        log.info("Se agrega un observer: {}", observer.toString());
         observers.add(observer);
     }
 
@@ -50,6 +59,7 @@ public class ValidationEngine implements Observable {
     }
 
     public void notifyObservers(){
+        log.info("notificando observers");
         for(Observer observer : observers){
             observer.update();
         }
