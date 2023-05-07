@@ -36,3 +36,5 @@ jobs:
           log-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.GITHUB_RUN_ID }}
           description: Test report is ready
           auto-inactive: true
+        if: ${{ github.ref == 'refs/heads/develop' }}
+
