@@ -34,13 +34,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Test Report
-          path: build/reports/tests/test/index.html
+          path: test/reports/index.html
 
       - name: Publish HTML test report
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
-          folder: build/reports/tests/test
+          folder: test/reports/index.html
           github-token: ${{ secrets.GITHUB_TOKEN }}
           keep-files: true
 
