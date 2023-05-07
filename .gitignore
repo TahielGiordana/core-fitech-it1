@@ -5,6 +5,8 @@ logs
 logs/
 /.gradle/*
 /build
+test
+/test
 out/*
 build/classes/java/main/
 .idea
