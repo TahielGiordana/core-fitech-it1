@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
@@ -32,6 +32,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           state: success
-          environment_url: ${{ github.server_url }}/${{ github.repository }}/${{ github.run_id }}/artifacts/download?path=test/reports/index.html
-          log_url: ${{ github.server_url }}/${{ github.repository }}/${{ github.run_id }}
+          environment_url: ${{ github.server_url }}/${{ github.repository }}/${{ env.GITHUB_RUN_ID }}/artifacts/download?path=test/reports/index.html
+          log_url: ${{ github.server_url }}/${{ github.repository }}/${{ env.GITHUB_RUN_ID }}
           description: Test report is ready
