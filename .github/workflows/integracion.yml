@@ -32,7 +32,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           state: success
-          environment-url: ${{ github.server_url }}/${{ github.repository }}/jobs/${{ env.JOB_ID }}/artifacts/test/reports/index.html
-          log-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.GITHUB_RUN_ID }}
+          environment-url: https://github.com/FerJoanEne/core-fitech/runs/${{ env.GITHUB_RUN_ID }}/artifacts/download?path=test/reports/index.html
+          log-url: https://github.com/FerJoanEne/core-fitech/actions/runs/${{ env.GITHUB_RUN_ID }}
           description: Test report is ready
           auto-inactive: true
+        env:
+          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.18-10/x64
+          JAVA_HOME_11_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.18-10/x64
