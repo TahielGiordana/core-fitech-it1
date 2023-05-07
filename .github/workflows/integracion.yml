@@ -28,10 +28,10 @@ jobs:
           name: Test Report
           path: test/reports/
       - name: Create deployment status
-          uses: peter-evans/create-deployment-status@v1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            state: success
-            environment_url: ${{ github.server_url }}/${{ github.repository }}/${{ github.run_id }}/artifacts/download?path=test/reports/index.html
-            log_url: ${{ github.server_url }}/${{ github.repository }}/${{ github.run_id }}
-            description: Test report is ready
+        uses: peter-evans/create-deployment-status@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          state: success
+          environment_url: ${{ github.server_url }}/${{ github.repository }}/${{ github.run_id }}/artifacts/download?path=test/reports/index.html
+          log_url: ${{ github.server_url }}/${{ github.repository }}/${{ github.run_id }}
+          description: Test report is ready
