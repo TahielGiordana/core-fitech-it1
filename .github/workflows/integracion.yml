@@ -32,6 +32,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           state: success
-          environment_url: ${{ github.server_url }}/${{ github.repository }}/${{ env.GITHUB_RUN_ID }}/artifacts/download?path=test/reports/
-          log_url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.GITHUB_RUN_ID }}
+          environment-url: ${{ github.server_url }}/${{ github.repository }}/${{ env.GITHUB_RUN_ID }}/artifacts/download?path=test/reports/index.html
+          log-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.GITHUB_RUN_ID }}
           description: Test report is ready
+          auto-inactive: true
