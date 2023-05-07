@@ -6,14 +6,14 @@ import interfaces.Observer;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ValidatorManager implements Observable {
+public class ValidationEngine implements Observable {
     private Set<Observer> observers;
     private boolean validationResult;
     private String actualUserName;
     private String actualMachineCode;
     private ValidatorClasses validatorClasses;
 
-    public ValidatorManager(ValidatorClasses validatorClasses) {
+    public ValidationEngine(ValidatorClasses validatorClasses) {
         this.observers = new HashSet<>();
         this.validatorClasses = validatorClasses;
         this.validationResult = false;
