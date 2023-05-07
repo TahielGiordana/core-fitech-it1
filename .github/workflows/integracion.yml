@@ -28,7 +28,7 @@ jobs:
           name: Test Report
           path: test/reports/
       - name: Create deployment status
-        uses: peter-evans/create-deployment-status@v1
+        uses: actions/create-deployment-status@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           state: success
