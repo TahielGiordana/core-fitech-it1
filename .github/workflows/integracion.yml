@@ -29,12 +29,12 @@ jobs:
         with:
           name: Test Report
           path: test/reports/index.html
-      - name: Publish HTML test report
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          branch: gh-pages
-          folder: test/reports/index.html
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
+          branch: develop
+          folder: ./test/reports/index.html
           keep-files: true
       - name: Create deployment status
         uses: chrnorm/deployment-status@v2
