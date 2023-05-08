@@ -41,7 +41,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           state: success
-          environment-url: https://<username>.github.io/<repository-name>/index.html
+          environment_url: ${{ github.server_url }}/${{ github.repository }}/${{ github.run_id }}/artifacts/download?path=test/reports/index.html
           log-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.GITHUB_RUN_ID }}
           description: Test report is ready
           auto-inactive: true
