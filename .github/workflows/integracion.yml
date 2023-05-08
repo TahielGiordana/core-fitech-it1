@@ -1,16 +1,14 @@
 name: Build with Gradle
-
 on:
   push:
     branches:
       - master
       - develop
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
@@ -28,20 +26,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Test Report
-          path: test/reports/index.html
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          token: ${{ secrets.ACCESS_TKN }}
-          branch: develop
-          folder: ./test/reports/index.html
-          keep-files: true
-      - name: Create deployment status
-        uses: chrnorm/deployment-status@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          state: success
-          environment_url: ${{ github.server_url }}/${{ github.repository }}/${{ github.run_id }}/artifacts/download?path=test/reports/index.html
-          log-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.GITHUB_RUN_ID }}
-          description: Test report is ready
-          auto-inactive: true
+          path: test/reports/
