@@ -18,3 +18,17 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
+      - name: Run tests
+        run: ./gradlew test
+      - name: Generate HTML test report
+        run: ./gradlew jacocoTestReport
+      - name: Archive HTML test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Report
+          path: test/reports/
+      - name: Publicar tests en GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/reports/tests/test/

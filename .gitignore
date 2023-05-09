@@ -1,6 +1,10 @@
 # Project exclude paths
 .gradle/*
 .gradle
+logs
+logs/
+test
+/test
 /.gradle/*
 /build
 out/*
