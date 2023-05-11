@@ -4,9 +4,11 @@ import interfaces.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
-public class ValidatorClasses implements Validator {
+public class ValidatorClasses {
     private Logger log = LogManager.getLogger("ValidatorClasses");
     private Set<Validator> validators;
 
@@ -14,15 +16,16 @@ public class ValidatorClasses implements Validator {
         this.validators = validatorStorage.getValidators();
     }
 
-    public boolean validate(String userName, String machineCode) {
+    public Map<String,Boolean> validate(String userName, String machineCode) {
         log.info("inicio metodo validate");
+        Map<String,Boolean> result = new HashMap<>();
         for (Validator validator : validators) {
             if (!validator.validate(userName, machineCode)) {
                 log.info("fin metodo validate - se retorna: false ");
-                return false;
+                result.put(validator.getClass().toString(),false);
             }
         }
         log.info("fin metodo validate - se retorna: true ");
-        return true;
+        return result;
     }
 }
