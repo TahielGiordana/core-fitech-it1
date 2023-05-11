@@ -22,7 +22,9 @@ public class ValidatorClasses {
         for (Validator validator : validators) {
             if (!validator.validate(userName, machineCode)) {
                 log.info("fin metodo validate - se retorna: false ");
-                result.put(validator.getClass().toString(),false);
+                result.put(validator.getClass().getName().toString(),false);
+            }else{
+                result.put(validator.getClass().getName().toString(),true);
             }
         }
         log.info("fin metodo validate - se retorna: true ");
