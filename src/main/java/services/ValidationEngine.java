@@ -16,37 +16,26 @@ public class ValidationEngine implements Observable {
     private Logger log = LogManager.getLogger("ValidationEngine");
     private final Set<Observer> observers;
     private boolean validationResult;
-    private String actualUserName;
-    private String actualMachineCode;
     private final ValidatorClasses validatorClasses;
 
     public ValidationEngine(ValidatorClasses validatorClasses) {
         this.observers = new HashSet<>();
         this.validatorClasses = validatorClasses;
         this.validationResult = false;
-        this.actualUserName = "";
-        this.actualMachineCode = "";
     }
 
     public void validate(String userName, String machineCode){
         log.info("init metodo validate con datos --> userName: {} - maquina: {}", userName, machineCode);
-        this.actualUserName = userName;
-        this.actualMachineCode = machineCode;
-        this.validationResult = this.validatorClasses.validate(userName, machineCode);
-        notifyObservers();
-        log.info("fin metodo validate");
+        Boolean result = this.validatorClasses.validate(userName, machineCode);
+        if(result != validationResult){
+            this.validationResult = result;
+            notifyObservers();
+        }
+        log.info("Fin método validate");
     }
 
     public boolean getValidationResult(){
         return this.validationResult;
-    }
-
-    public String getActualUserName(){
-        return this.actualUserName;
-    }
-
-    public String getActualMachineCode(){
-        return this.actualMachineCode;
     }
 
     public void addObserver(Observer observer){
