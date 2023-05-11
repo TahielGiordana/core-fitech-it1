@@ -29,7 +29,7 @@ public class ValidationEngine implements Observable {
     public void validate(String userName, String machineCode){
         log.info("init metodo validate con datos --> userName: {} - maquina: {}", userName, machineCode);
         Map<String,Boolean> result = this.validatorClasses.validate(userName, machineCode);
-        if(result.equals(validationResult)){
+        if(!result.equals(validationResult)){
             this.validationResult = result;
             notifyObservers();
         }
