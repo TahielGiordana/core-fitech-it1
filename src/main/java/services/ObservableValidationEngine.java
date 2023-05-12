@@ -17,7 +17,6 @@ public class ObservableValidationEngine implements Observable {
 
     public ObservableValidationEngine(Set<Validator> validators) {
         this.observers = new HashSet<>();
-        this.validationResult = true;
         this.validationTask = new ValidationTask(validators);
     }
 
