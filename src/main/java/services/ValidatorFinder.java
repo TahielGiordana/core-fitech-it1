@@ -21,7 +21,7 @@ public class ValidatorFinder {
 
     public Set<Validator> findValidators(String path) {
         Set<Validator> result = new HashSet<>();
-        File[] files = getFiles();
+        File[] files = getFiles(path);
         if(files!=null){
             for (File f : files) {
                 if (f.getName().endsWith(".jar")){
@@ -75,12 +75,11 @@ public class ValidatorFinder {
         }
     }
 
-    private File[] getFiles() {
+    private File[] getFiles(String path) {
         File[] files = new File[0];
         try{
-            File file = new File("");
-            log.info("path del file: " + file.getAbsolutePath());
-            files = new File(file.getAbsolutePath()+File.separator+"validators").listFiles();
+            log.info("path del file: " + path+File.separator+"validators");
+            files = new File(path+File.separator+"validators").listFiles();
             assert files != null;
             log.info("cantidad de archivos listados: "+files.length);
         }catch(Exception e){
