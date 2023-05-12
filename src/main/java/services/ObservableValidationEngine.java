@@ -22,10 +22,8 @@ public class ObservableValidationEngine implements Observable {
 
     public void runValidationTask(String userName, String machineCode){
         boolean result = this.validationTask.validate(userName, machineCode);
-        if(result != validationResult){
-            this.validationResult = result;
-            notifyObservers();
-        }
+        this.validationResult = result;
+        notifyObservers();
     }
 
     public boolean getValidationResult(){
