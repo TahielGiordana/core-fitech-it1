@@ -1,44 +1,46 @@
 package core;
 
+import interfaces.Observable;
 import interfaces.Observer;
-import services.ValidatorFinder;
-import services.ValidationObservable;
+import services.ValidationTask;
+import services.ValidatorFactory;
 
-import java.io.*;
-import java.util.Properties;
+import java.util.HashSet;
+import java.util.Set;
 
-public class CoreFitech {
-    private ValidationObservable observableValidationEngine;
+public class CoreFitech  implements Observable{
+    private ValidationTask validationTask;
+    private final Set<Observer> observers = new HashSet<>();
 
-    public CoreFitech(String path) {
-        ValidatorFinder validatorFinder = new ValidatorFinder();
-        observableValidationEngine = new ValidationObservable(validatorFinder.findValidators(path), getMachineCode());
+    private boolean isValid = true;
+
+    public CoreFitech(String path){
+        validationTask = new ValidatorFactory().create(path);
     }
 
     public void postValidationRequest(String userName){
-        this.observableValidationEngine.runValidationTask(userName);
+        this.isValid = validationTask.isValid(userName);
+        notifyObservers();
     }
 
     public boolean getResult(){
-        return this.observableValidationEngine.getValidationResult();
+        return this.isValid;
     }
 
-    public void subscribe(Observer observer){
-        this.observableValidationEngine.addObserver(observer);
+    @Override
+    public void addObserver(Observer observer){
+        observers.add(observer);
     }
 
-    private String getMachineCode(){
-        Properties properties = new Properties();
-        String path = new File("").getAbsolutePath() + "/src/main/resources/application.properties";
-        File file = new File(path);
-        try (InputStream inputStream = new FileInputStream(file)) {
-            properties.load(inputStream);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    @Override
+    public void removeObserver(Observer observer){
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(){
+        for(Observer observer : observers){
+            observer.update();
         }
-        return  properties.getProperty("machineCode");
     }
-
 }
