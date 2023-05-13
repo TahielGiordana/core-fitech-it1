@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserStory1 {
 
     private Logger log = LogManager.getLogger("UserStory1");
-    CoreFitech validationService = new CoreFitech(new File("").getAbsolutePath());
+    //CoreFitech validationService = new CoreFitech(new File("").getAbsolutePath());
 
     @BeforeEach
     public void setUp() {
@@ -23,19 +23,17 @@ public class UserStory1 {
 
     @Test
     public void CA1(){
-        /*
-        log.warn("se ejecuta test de CA1");
-        validationEngine.validate("Tahiel", "Bicicleta1");
-        assertTrue(validationEngine.getValidationResult());
 
+        log.warn("se ejecuta test de CA1");
+         /*validationEngine.validate("Tahiel", "Bicicleta1");
+        assertTrue(validationEngine.getValidationResult());
          */
     }
 
     @Test
     public void CA2() {
-        /*
         log.warn("se ejecuta test de CA2");
-        validationEngine.validate("personaInv", "Bicicleta1");
+       /* validationEngine.validate("personaInv", "Bicicleta1");
         assertFalse(validationEngine.getValidationResult());
          */
     }

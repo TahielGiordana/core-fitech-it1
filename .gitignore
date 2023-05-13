@@ -3,8 +3,8 @@
 .gradle
 logs
 logs/
-test
-/test
+test/reports
+/test/reports
 /.gradle/*
 /build
 out/*
