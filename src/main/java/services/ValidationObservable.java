@@ -9,19 +9,22 @@ import interfaces.Observable;
 import interfaces.Observer;
 import interfaces.Validator;
 
-public class ObservableValidationEngine implements Observable {
+public class ValidationObservable implements Observable {
 
     private final Set<Observer> observers;
     private boolean validationResult;
     private ValidationTask validationTask;
 
-    public ObservableValidationEngine(Set<Validator> validators) {
+    private String machindeCode;
+
+    public ValidationObservable(Set<Validator> validators, String machineCode) {
         this.observers = new HashSet<>();
         this.validationTask = new ValidationTask(validators);
+        this.machindeCode = machineCode;
     }
 
-    public void runValidationTask(String userName, String machineCode){
-        boolean result = this.validationTask.validate(userName, machineCode);
+    public void runValidationTask(String userName){
+        boolean result = this.validationTask.validate(userName, this.machindeCode);
         this.validationResult = result;
         notifyObservers();
     }

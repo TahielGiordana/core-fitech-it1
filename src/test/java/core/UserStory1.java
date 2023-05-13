@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import services.ObservableValidationEngine;
 
 import java.io.File;
 
@@ -15,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserStory1 {
 
     private Logger log = LogManager.getLogger("UserStory1");
-    ValidationService validationService = new ValidationService(new File("").getAbsolutePath());
+    CoreFitech validationService = new CoreFitech(new File("").getAbsolutePath());
 
     @BeforeEach
     public void setUp() {
