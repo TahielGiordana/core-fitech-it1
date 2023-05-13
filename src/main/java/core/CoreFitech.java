@@ -11,15 +11,17 @@ import java.util.Set;
 public class CoreFitech  implements Observable{
     private ValidationTask validationTask;
     private final Set<Observer> observers = new HashSet<>();
+    private String machineCode;
 
     private boolean isValid = true;
 
-    public CoreFitech(String path){
-        validationTask = new ValidatorFactory().create(path);
+    public CoreFitech(String path, String machineCode){
+        this.validationTask = new ValidatorFactory().create(path);
+        this.machineCode = machineCode;
     }
 
     public void postValidationRequest(String userName){
-        this.isValid = validationTask.isValid(userName);
+        this.isValid = validationTask.validate(userName, this.machineCode);
         notifyObservers();
     }
 
