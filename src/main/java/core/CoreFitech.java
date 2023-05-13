@@ -29,7 +29,8 @@ public class CoreFitech {
 
     private String getMachineCode(){
         Properties properties = new Properties();
-        File file = new File(new File("").getAbsolutePath() + "/src/main/resources/application.properties");
+        String path = new File("").getAbsolutePath() + "/src/main/resources/application.properties";
+        File file = new File(path);
         try (InputStream inputStream = new FileInputStream(file)) {
             properties.load(inputStream);
         } catch (FileNotFoundException e) {
