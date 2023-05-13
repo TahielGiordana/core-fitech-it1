@@ -12,7 +12,7 @@ public class CoreFitech {
 
     public CoreFitech(String path) {
         ValidatorFinder validatorFinder = new ValidatorFinder();
-        observableValidationEngine = new ValidationObservable(validatorFinder.findValidators(path), getMachineCode());
+        observableValidationEngine = new ValidationObservable(validatorFinder.findValidators(path), getMachineCode(path));
     }
 
     public void postValidationRequest(String userName){
@@ -27,9 +27,9 @@ public class CoreFitech {
         this.observableValidationEngine.addObserver(observer);
     }
 
-    private String getMachineCode(){
+    private String getMachineCode(String path){
         Properties properties = new Properties();
-        File file = new File("src/main/resources/application.properties");
+        File file = new File(path + "/src/main/resources/application.properties");
         try (InputStream inputStream = new FileInputStream(file)) {
             properties.load(inputStream);
         } catch (FileNotFoundException e) {
