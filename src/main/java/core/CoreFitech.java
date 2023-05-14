@@ -13,7 +13,7 @@ public class CoreFitech  implements Observable{
     private final Set<Observer> observers = new HashSet<>();
     private String machineCode;
 
-    private boolean isValid = true;
+    private boolean isValid;
 
     public CoreFitech(String path, String machineCode){
         this.validationTask = new ValidatorFactory().create(path);
