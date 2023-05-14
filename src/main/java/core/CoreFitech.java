@@ -5,17 +5,18 @@ import interfaces.Observer;
 import services.ValidationTask;
 import services.ValidatorFactory;
 
+import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 
 public class CoreFitech  implements Observable{
-    private ValidationTask validationTask;
+    private final ValidationTask validationTask;
     private final Set<Observer> observers = new HashSet<>();
     private String machineCode;
 
     private boolean isValid;
 
-    public CoreFitech(String path, String machineCode){
+    public CoreFitech(String path, String machineCode) throws FileNotFoundException {
         this.validationTask = new ValidatorFactory().create(path);
         this.machineCode = machineCode;
     }
@@ -23,6 +24,10 @@ public class CoreFitech  implements Observable{
     public void postValidationRequest(String userName){
         this.isValid = validationTask.validate(userName, this.machineCode);
         notifyObservers();
+    }
+
+    public ValidationTask getValidationTask(){
+        return this.validationTask;
     }
 
     public boolean getResult(){

@@ -19,4 +19,8 @@ public class ValidationTask implements Validator {
         }
         return true;
     }
+
+    public Set<Validator> getValidators() {
+        return validators;
+    }
 }
