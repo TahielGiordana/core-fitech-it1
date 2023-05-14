@@ -84,11 +84,13 @@ public class ValidatorFinder {
         File[] files = new File[0];
         try{
             log.info("path del file: " + path+File.separator+"validators");
-            files = new File(path+File.separator+"validators").listFiles();
-            if(files == null){
+            File file = new File(path + File.separator + "validators");
+            if(file.exists()){
+                files = file.listFiles();
+                log.info("cantidad de archivos listados: {}", files!=null?files.length:0);
+            }else{
                 return null;
             }
-            log.info("cantidad de archivos listados: "+files.length);
         }catch(Exception e){
             log.error("no se pudo leer lista de archivos");
         }
@@ -101,4 +103,5 @@ public class ValidatorFinder {
             throw new FileNotFoundException("el path es invalido");
         }
     }
+
 }
