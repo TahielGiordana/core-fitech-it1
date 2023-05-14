@@ -8,10 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 //custom imports
-import interfaces.Validator;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Set;
 
 
 
@@ -27,7 +25,7 @@ public class UserStory2 {
 
     @Test
     public void CA1(){
-        log.warn("se ejecuta test de CA1");
+        log.warn("se ejecuta test de CA1 - FileNotFoundException");
         FileNotFoundException fileNotFoundException = assertThrows(FileNotFoundException.class, () -> {
             new CoreFitech("", "Bicicleta1");
         });
@@ -38,7 +36,7 @@ public class UserStory2 {
 
     @Test
     public void CA2() {
-        log.warn("se ejecuta test de CA2");
+        log.warn("se ejecuta test de CA2 - IllegalArgumentException");
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> {
             new CoreFitech("\\videos", "Bicicleta1");
         });
@@ -48,11 +46,19 @@ public class UserStory2 {
 
     @Test
     public void CA3() throws FileNotFoundException {
-        log.warn("se ejecuta test de CA3");
+        log.warn("se ejecuta test de CA3 - CARPETA VACIA");
         CoreFitech coreFitech = new CoreFitech(new File("emptyFolder").getAbsolutePath(), "Bicicleta1");
-        Set<Validator> validators = coreFitech.getValidationTask().getValidators();
-        assertTrue(validators.isEmpty());
-        log.warn("cantidad de validators: {}", validators);
+        int size = coreFitech.sizeSetValidators();
+        assertEquals(0, size);
+        log.warn("cantidad de validators: {}", size);
+    }
 
+    @Test
+    public void CA4() throws FileNotFoundException {
+        log.warn("se ejecuta test de CA4 - VALIDACIONES MULTIPLES");
+        CoreFitech coreFitech = new CoreFitech(new File("").getAbsolutePath(), "Bicicleta1");
+        int size = coreFitech.sizeSetValidators();
+        assertEquals(2, size);
+        log.warn("cantidad de validators: {}", size);
     }
 }

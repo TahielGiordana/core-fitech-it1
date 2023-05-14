@@ -12,22 +12,21 @@ import java.util.Set;
 public class CoreFitech  implements Observable{
     private final ValidationTask validationTask;
     private final Set<Observer> observers = new HashSet<>();
-    private String machineCode;
 
     private boolean isValid;
 
     public CoreFitech(String path, String machineCode) throws FileNotFoundException {
         this.validationTask = new ValidatorFactory().create(path);
-        this.machineCode = machineCode;
+        this.validationTask.setMachineCode(machineCode);
     }
 
-    public void postValidationRequest(String userName){
-        this.isValid = validationTask.validate(userName, this.machineCode);
+    public void processRequest(String userName, String opcion){
+        this.isValid = validationTask.validationRequest(userName, opcion);
         notifyObservers();
     }
 
-    public ValidationTask getValidationTask(){
-        return this.validationTask;
+    public int sizeSetValidators(){
+        return this.validationTask.size();
     }
 
     public boolean getResult(){
