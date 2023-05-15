@@ -23,13 +23,16 @@ public class CoreFitech  implements Observable, Observer{
         this.validationResult = new HashMap<>();
         this.checkedValidators = new HashSet<>();
         System.out.println("\u001B[31mCuando se inicia el Core isValid es: "+validationResult+"\u001B[0m");
-        this.validationTask = new ValidatorFactory().create(path);
+        this.validationTask = new ValidatorFactory().create(path, machineCode);
+        this.addObservables();
+    }
+
+    private void addObservables(){
         for(Validator validator : validationTask.getValidators()){
             if(Observable.class.isAssignableFrom(validator.getClass())){
                 validator.addObserver(this);
             }
         }
-        this.validationTask.setMachineCode(machineCode);
     }
 
     public void processRequest(String userName){
