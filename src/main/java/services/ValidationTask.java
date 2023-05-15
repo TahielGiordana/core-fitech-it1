@@ -1,5 +1,6 @@
 package services;
 
+import interfaces.Observer;
 import interfaces.Validator;
 
 import java.util.Set;
@@ -22,6 +23,23 @@ public class ValidationTask {
         }
         return true;
     }
+
+    public void uncheckValidator(String validatorName,Observer observer){
+        for(Validator validator : validators){
+            if(validator.getClass().getName().equals(validatorName)){
+                validator.removeObserver(observer);
+            }
+        }
+    }
+
+    public void checkValidator(String validatorName,Observer observer){
+        for(Validator validator : validators){
+            if(validator.getClass().getName().equals(validatorName)){
+                validator.addObserver(observer);
+            }
+        }
+    }
+
 
     public Set<Validator> getValidators() {
         return validators;

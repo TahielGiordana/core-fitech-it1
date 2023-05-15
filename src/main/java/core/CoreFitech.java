@@ -34,6 +34,14 @@ public class CoreFitech  implements Observable, Observer{
         validationTask.validate(userName);
     }
 
+    public void checkValidator(String validatorName, boolean checked){
+        if(checked){
+            validationTask.checkValidator(validatorName, this);
+        }else{
+            validationTask.uncheckValidator(validatorName, this);
+        }
+    }
+
     public Map<String,Boolean> getResult(){
         return this.validationResult;
     }
