@@ -19,7 +19,7 @@ public class CoreFitech  implements Observable, Observer{
         this.validationTask = new ValidatorFactory().create(path);
         for(Validator validator : validationTask.getValidators()){
             if(Observable.class.isAssignableFrom(validator.getClass())){
-                ((Observable) validator).addObserver(this);
+                validator.addObserver(this);
             }
         }
         this.validationTask.setMachineCode(machineCode);
@@ -56,6 +56,7 @@ public class CoreFitech  implements Observable, Observer{
         boolean result = true;
         for(Validator validator : validators){
             if(!validator.getResult()){
+                System.out.println("Falló el " + validator.getClass().getName());
                 result = false;
             }
         }
