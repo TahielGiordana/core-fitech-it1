@@ -64,12 +64,16 @@ public class CoreFitech  implements Observable, Observer{
         Set<Validator> validators = validationTask.getValidators();
         Map<String,Boolean> result = new HashMap<>();
         for(Validator validator : validators){
-            if(!validator.getResult()){
-                System.out.println("Falló el " + validator.getClass().getName());
-            }else{
-                System.out.println("Pasó el " + validator.getClass().getName());
+            if(validator.getResult() == null){
+                return;
+            }else {
+                if(!validator.getResult()){
+                    System.out.println("Falló el " + validator.getClass().getName());
+                }else{
+                    System.out.println("Pasó el " + validator.getClass().getName());
+                }
+                result.put(validator.getClass().getName(),validator.getResult());
             }
-            result.put(validator.getClass().getName(),validator.getResult());
         }
         System.out.println("\u001B[31mEl resultado de Core era "+ validationResult + "y ahora es "+ result +"\u001B[0m");
 
