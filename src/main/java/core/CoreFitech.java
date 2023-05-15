@@ -17,8 +17,11 @@ public class CoreFitech  implements Observable, Observer{
     private final Set<Observer> observers = new HashSet<>();
     private Map<String,Boolean> validationResult;
 
+    private Set<String> checkedValidators;
+
     public CoreFitech(String path, String machineCode) throws FileNotFoundException {
         this.validationResult = new HashMap<>();
+        this.checkedValidators = new HashSet<>();
         System.out.println("\u001B[31mCuando se inicia el Core isValid es: "+validationResult+"\u001B[0m");
         this.validationTask = new ValidatorFactory().create(path);
         for(Validator validator : validationTask.getValidators()){
@@ -36,9 +39,9 @@ public class CoreFitech  implements Observable, Observer{
 
     public void checkValidator(String validatorName, boolean checked){
         if(checked){
-            validationTask.checkValidator(validatorName, this);
+            checkedValidators.add(validatorName);
         }else{
-            validationTask.uncheckValidator(validatorName, this);
+            checkedValidators.remove(validatorName);
         }
     }
 
@@ -72,15 +75,19 @@ public class CoreFitech  implements Observable, Observer{
         Set<Validator> validators = validationTask.getValidators();
         Map<String,Boolean> result = new HashMap<>();
         for(Validator validator : validators){
-            if(validator.getResult() == null){
-                return;
-            }else {
-                if(!validator.getResult()){
-                    System.out.println("Falló el " + validator.getClass().getName());
-                }else{
-                    System.out.println("Pasó el " + validator.getClass().getName());
+            if(checkedValidators.contains(validator.getClass().getName())){
+                if(validator.getResult() == null){
+                    return;
+                }else {
+                    if(!validator.getResult()){
+                        System.out.println("Falló el " + validator.getClass().getName());
+                    }else{
+                        System.out.println("Pasó el " + validator.getClass().getName());
+                    }
+                    result.put(validator.getClass().getName(),validator.getResult());
                 }
-                result.put(validator.getClass().getName(),validator.getResult());
+            }else{
+                System.out.println(validator.getClass().getName()+" No está en la lista a checkear");
             }
         }
         System.out.println("\u001B[31mEl resultado de Core era "+ validationResult + "y ahora es "+ result +"\u001B[0m");

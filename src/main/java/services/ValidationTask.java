@@ -24,23 +24,6 @@ public class ValidationTask {
         return true;
     }
 
-    public void uncheckValidator(String validatorName,Observer observer){
-        for(Validator validator : validators){
-            if(validator.getClass().getName().equals(validatorName)){
-                validator.removeObserver(observer);
-            }
-        }
-    }
-
-    public void checkValidator(String validatorName,Observer observer){
-        for(Validator validator : validators){
-            if(validator.getClass().getName().equals(validatorName)){
-                validator.addObserver(observer);
-            }
-        }
-    }
-
-
     public Set<Validator> getValidators() {
         return validators;
     }
