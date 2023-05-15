@@ -51,6 +51,10 @@ public class CoreFitech  implements Observable, Observer{
         }
     }
 
+    public Set<Validator> getValidators(){
+        return validationTask.getValidators();
+    }
+
     @Override
     public void update() {
         Set<Validator> validators = validationTask.getValidators();
