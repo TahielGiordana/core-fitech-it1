@@ -19,7 +19,7 @@ public class CoreFitech  implements Observable, Observer{
         this.validationTask = new ValidatorFactory().create(path);
         for(Validator validator : validationTask.getValidators()){
             if(Observable.class.isAssignableFrom(validator.getClass())){
-                validator.addObserver(this);
+                ((Observable) validator).addObserver(this);
             }
         }
         this.validationTask.setMachineCode(machineCode);
