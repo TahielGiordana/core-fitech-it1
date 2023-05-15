@@ -1,8 +1,9 @@
 package interfaces;
 
-public interface Validator {
+public interface Validator extends Observable {
 
 	boolean validate(String username, String machineCode);
 
-    String getName();
+    boolean getResult();
+
 }
