@@ -17,8 +17,10 @@ public class CoreFitech  implements Observable, Observer{
 
     public CoreFitech(String path, String machineCode) throws FileNotFoundException {
         this.validationTask = new ValidatorFactory().create(path);
-        for(Observable observable : validationTask.getValidators()){
-            observable.addObserver(this);
+        for(Validator validator : validationTask.getValidators()){
+            if(Observable.class.isAssignableFrom(validator.getClass())){
+                validator.addObserver(this);
+            }
         }
         this.validationTask.setMachineCode(machineCode);
     }
