@@ -13,9 +13,10 @@ import java.util.Set;
 public class CoreFitech  implements Observable, Observer{
     private final ValidationTask validationTask;
     private final Set<Observer> observers = new HashSet<>();
-    private boolean isValid;
+    private Boolean isValid;
 
     public CoreFitech(String path, String machineCode) throws FileNotFoundException {
+        System.out.println("\u001B[31mCuando se inicia el Core isValid es: "+isValid+"\u001B[0m");
         this.validationTask = new ValidatorFactory().create(path);
         for(Validator validator : validationTask.getValidators()){
             if(Observable.class.isAssignableFrom(validator.getClass())){
@@ -58,11 +59,16 @@ public class CoreFitech  implements Observable, Observer{
             if(!validator.getResult()){
                 System.out.println("Falló el " + validator.getClass().getName());
                 result = false;
+            }else{
+                System.out.println("Pasó el " + validator.getClass().getName());
             }
         }
-        if(isValid!= result){
+        System.out.println("\u001B[31mEl resultado de Core era "+isValid + "y ahora es "+result+"\u001B[0m");
+        if(isValid == null || isValid!=result){
             isValid = result;
+            System.out.println("\u001B[31mAsi que notifico a la UI\u001B[0m");
             notifyObservers();
         }
+
     }
 }
