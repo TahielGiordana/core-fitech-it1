@@ -27,6 +27,7 @@ public class CoreFitech  implements Observable, Observer{
     }
 
     public void processRequest(String userName){
+        isValid = null;
         validationTask.validate(userName);
     }
 
@@ -68,7 +69,7 @@ public class CoreFitech  implements Observable, Observer{
             }
         }
         System.out.println("\u001B[31mEl resultado de Core era "+isValid + "y ahora es "+result+"\u001B[0m");
-        if(isValid == null || isValid!=result){
+        if(isValid == null || isValid != result){
             isValid = result;
             System.out.println("\u001B[31mAsi que notifico a la UI\u001B[0m");
             notifyObservers();
