@@ -12,35 +12,21 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class CoreFitech  implements Observable, Observer{
+public class CoreFitech{
     private final ValidationTask validationTask;
-    private final Set<Observer> observers = new HashSet<>();
-    private Map<String,Boolean> validationResult;
+    //private Map<String,Boolean> validationResult;
 
-    private Set<String> checkedValidators;
+    //private Set<String> checkedValidators;
 
     public CoreFitech(String path, String machineCode) throws FileNotFoundException {
-        this.validationResult = new HashMap<>();
-        this.checkedValidators = new HashSet<>();
-        System.out.println("\u001B[31mCuando se inicia el Core isValid es: "+validationResult+"\u001B[0m");
-        this.validationTask = new ValidatorFactory().create(path, machineCode);
-        this.addObservables();
+        //this.validationResult = new HashMap<>();
+        //this.checkedValidators = new HashSet<>();
+        //System.out.println("\u001B[31mCuando se inicia el Core isValid es: "+validationResult+"\u001B[0m");
+        ValidatorFactory validatorFactory = new ValidatorFactory(path, machineCode);
+        this.validationTask = validatorFactory.buildValidationTask();
     }
 
-    private void addObservables(){
-        for(Validator validator : validationTask.getValidators()){
-            if(Observable.class.isAssignableFrom(validator.getClass())){
-                validator.addObserver(this);
-            }
-        }
-    }
-
-    public void processRequest(String userName){
-        validationResult = new HashMap<>();
-        validationTask.validate(userName);
-    }
-
-    public void checkValidator(String validatorName, boolean checked){
+    /*public void checkValidator(String validatorName, boolean checked){
         if(checked){
             checkedValidators.add(validatorName);
         }else{
@@ -50,30 +36,13 @@ public class CoreFitech  implements Observable, Observer{
 
     public Map<String,Boolean> getResult(){
         return this.validationResult;
+    }*/
+
+    public ValidationTask getValidationTask() {
+        return this.validationTask;
     }
 
-    @Override
-    public void addObserver(Observer observer){
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer){
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers(){
-        for(Observer observer : observers){
-            observer.update();
-        }
-    }
-
-    public Set<Validator> getValidators(){
-        return validationTask.getValidators();
-    }
-
-    @Override
+    /*@Override
     public void update() {
         Set<Validator> validators = validationTask.getValidators();
         Map<String,Boolean> result = new HashMap<>();
@@ -100,5 +69,5 @@ public class CoreFitech  implements Observable, Observer{
             System.out.println("\u001B[31mAsi que notifico a la UI\u001B[0m");
             notifyObservers();
         }
-    }
+    }*/
 }
