@@ -5,6 +5,7 @@ import interfaces.Observer;
 import interfaces.Validator;
 import services.ValidationTask;
 import services.ValidatorFactory;
+import services.score.ScoreTask;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -14,16 +15,18 @@ import java.util.Set;
 
 public class CoreFitech{
     private final ValidationTask validationTask;
+    private final ScoreTask scoreTask;
     //private Map<String,Boolean> validationResult;
 
     //private Set<String> checkedValidators;
 
-    public CoreFitech(String path, String machineCode) throws FileNotFoundException {
+    public CoreFitech(String validatorsPath, String machineCode, String scoresPath) throws FileNotFoundException {
         //this.validationResult = new HashMap<>();
         //this.checkedValidators = new HashSet<>();
         //System.out.println("\u001B[31mCuando se inicia el Core isValid es: "+validationResult+"\u001B[0m");
-        ValidatorFactory validatorFactory = new ValidatorFactory(path, machineCode);
+        ValidatorFactory validatorFactory = new ValidatorFactory(validatorsPath, machineCode);
         this.validationTask = validatorFactory.buildValidationTask();
+        this.scoreTask = new ScoreTask(scoresPath);
     }
 
     /*public void checkValidator(String validatorName, boolean checked){
@@ -40,6 +43,10 @@ public class CoreFitech{
 
     public ValidationTask getValidationTask() {
         return this.validationTask;
+    }
+
+    public ScoreTask getScoreTask(){
+        return this.scoreTask;
     }
 
     /*@Override
