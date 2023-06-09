@@ -4,9 +4,16 @@ on:
     branches:
       - master
       - develop
+      
+permissions:
+  contents: write
+  security-events: write
+  
 jobs:
   build:
+  
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
