@@ -3,8 +3,7 @@
 .gradle
 logs
 logs/
-test/reports
-/test/reports
+bin/
 /.gradle/*
 /build
 out/*
