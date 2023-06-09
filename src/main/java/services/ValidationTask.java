@@ -12,34 +12,46 @@ import java.util.Set;
 
 public class ValidationTask implements Observable, Observer {
     private final Logger log = LogManager.getLogger("ValidationTask");
-    Set<Validator> validators;
+    Map<Validator, Boolean> validators;
     private String machineCode;
     private Map<String,Boolean> result;
 
     public ValidationTask(Set<Validator> validators, String machineCode){
         this.result = new HashMap<>();
-        this.validators = validators;
+        for(Validator validator: validators){
+            this.validators.put(validator, true);
+        };
         this.machineCode = machineCode;
         this.addAsObserver();
     }
 
     public void processRequest(String userName) {
-        for (Validator validator : validators) {
-            validator.validate(userName, this.machineCode);
-        }
+        validators.forEach((validator, checked) -> {
+            if(checked){
+                validator.validate(userName, this.machineCode);
+            }
+        });
+    }
+
+    public void toggleValidatorCheck(String validatorName){
+        validators.forEach((validator, checked) -> {
+            if(validator.getClass().getName().equals(validatorName)){
+                validators.put(validator, !checked);
+            }
+        });
     }
 
     public void stopValidationTask(){
         this.result = new HashMap<>();
-        for(Validator validator : validators){
+        validators.forEach((validator, aBoolean) -> {
             validator.stopValidation();
-        }
+        });
     }
 
     private void addAsObserver() {
-        for (Validator validator : this.validators) {
+        validators.forEach((validator, aBoolean) -> {
             validator.addObserver(this);
-        }
+        });
     }
 
     @Override
@@ -69,20 +81,23 @@ public class ValidationTask implements Observable, Observer {
     @Override
     public void update() {
         Map<String,Boolean> partialResult = new HashMap<>();
-        for (Validator validator : this.validators) {
+
+        for (Validator validator : this.validators.keySet()) {
             //Verifico si existen validators que no finalizaron su validación
             //Si hay alguno en proceso de validación no realizo el update en la ui
-            if(validator.getResult() == null){
-                return;
-            }
-            //Si todos los validators tienen su resultado verifico si alguno falló
-            else{
-                if (!validator.getResult()) {
-                    log.info("Falló el validador: {}", validator.getClass().getName());
-                }else{
-                    log.info("Pasó el validador: {}", validator.getClass().getName());
+            if(validators.get(validator)){
+                if(validator.getResult() == null){
+                    return;
                 }
-                partialResult.put(validator.getClass().getName(), validator.getResult());
+                //Si todos los validators tienen su resultado verifico si alguno falló
+                else{
+                    if (!validator.getResult()) {
+                        log.info("Falló el validador: {}", validator.getClass().getName());
+                    }else{
+                        log.info("Pasó el validador: {}", validator.getClass().getName());
+                    }
+                    partialResult.put(validator.getClass().getName(), validator.getResult());
+                }
             }
         }
         System.out.println("\u001B[31mEl resultado de Core era "+ result + "y ahora es "+ partialResult +"\u001B[0m");
@@ -98,7 +113,7 @@ public class ValidationTask implements Observable, Observer {
     }
 
     public Set<Validator> getValidators(){
-        return this.validators;
+        return this.validators.keySet();
     }
 
     public Map<String,Boolean> getResult(){
