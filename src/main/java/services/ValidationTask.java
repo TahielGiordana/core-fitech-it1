@@ -6,16 +6,18 @@ import interfaces.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class ValidationTask implements Observable, Observer {
     private final Logger log = LogManager.getLogger("ValidationTask");
     Set<Validator> validators;
     private String machineCode;
-    private Boolean result;
+    private Map<String,Boolean> result;
 
     public ValidationTask(Set<Validator> validators, String machineCode){
-        this.result = null;
+        this.result = new HashMap<>();
         this.validators = validators;
         this.machineCode = machineCode;
         this.addAsObserver();
@@ -28,7 +30,7 @@ public class ValidationTask implements Observable, Observer {
     }
 
     public void stopValidationTask(){
-        this.result = null;
+        this.result = new HashMap<>();
         for(Validator validator : validators){
             validator.stopValidation();
         }
@@ -52,7 +54,9 @@ public class ValidationTask implements Observable, Observer {
 
     @Override
     public void notifyObservers() {
-
+        for (Observer observer : observers) {
+            observer.update();
+        }
     }
 
     @Override
@@ -64,7 +68,7 @@ public class ValidationTask implements Observable, Observer {
 
     @Override
     public void update() {
-        boolean partialResult = true;
+        Map<String,Boolean> partialResult = new HashMap<>();
         for (Validator validator : this.validators) {
             //Verifico si existen validators que no finalizaron su validación
             //Si hay alguno en proceso de validación no realizo el update en la ui
@@ -75,17 +79,18 @@ public class ValidationTask implements Observable, Observer {
             else{
                 if (!validator.getResult()) {
                     log.info("Falló el validador: {}", validator.getClass().getName());
-                    partialResult = false;
-                    break; // Detener la iteración si hay un fallo
+                }else{
+                    log.info("Pasó el validador: {}", validator.getClass().getName());
                 }
-            log.info("Pasó el validador: {}", validator.getClass().getName());
+                partialResult.put(validator.getClass().getName(), validator.getResult());
             }
         }
-        if(result == null || partialResult != result){
+        System.out.println("\u001B[31mEl resultado de Core era "+ result + "y ahora es "+ partialResult +"\u001B[0m");
+        if(result.isEmpty() || !partialResult.equals(result)){
             result = partialResult;
-            this.notifyObservers(result);
+            System.out.println("\u001B[31mAsi que notifico a la UI\u001B[0m");
+            this.notifyObservers();
         }
-        log.info("\u001B[31mResultado de la validación es: {}\u001B[0m", result);
     }
 
     @Override
@@ -94,5 +99,9 @@ public class ValidationTask implements Observable, Observer {
 
     public Set<Validator> getValidators(){
         return this.validators;
+    }
+
+    public Map<String,Boolean> getResult(){
+        return this.result;
     }
 }
