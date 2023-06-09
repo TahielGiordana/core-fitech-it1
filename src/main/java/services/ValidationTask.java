@@ -12,12 +12,13 @@ import java.util.Set;
 
 public class ValidationTask implements Observable, Observer {
     private final Logger log = LogManager.getLogger("ValidationTask");
-    Map<Validator, Boolean> validators;
+    private Map<Validator, Boolean> validators;
     private String machineCode;
     private Map<String,Boolean> result;
 
     public ValidationTask(Set<Validator> validators, String machineCode){
         this.result = new HashMap<>();
+        this.validators = new HashMap<>();
         for(Validator validator: validators){
             this.validators.put(validator, true);
         };
