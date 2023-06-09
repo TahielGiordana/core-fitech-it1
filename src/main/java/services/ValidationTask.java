@@ -27,11 +27,16 @@ public class ValidationTask implements Observable, Observer {
     }
 
     public void processRequest(String userName) {
-        validators.forEach((validator, checked) -> {
-            if(checked){
+        int validatorsChecked = 0;
+        for(Validator validator : validators.keySet()){
+            if(validators.get(validator)){
                 validator.validate(userName, this.machineCode);
+                validatorsChecked++;
             }
-        });
+        }
+        if(validatorsChecked == 0){
+            update();
+        }
     }
 
     public void toggleValidatorCheck(String validatorName){
