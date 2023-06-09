@@ -12,8 +12,10 @@ public class ValidationTask implements Observable, Observer {
     private final Logger log = LogManager.getLogger("ValidationTask");
     Set<Validator> validators;
     private String machineCode;
+    private Boolean result;
 
     public ValidationTask(Set<Validator> validators, String machineCode){
+        this.result = null;
         this.validators = validators;
         this.machineCode = machineCode;
         this.addAsObserver();
@@ -22,6 +24,13 @@ public class ValidationTask implements Observable, Observer {
     public void processRequest(String userName) {
         for (Validator validator : validators) {
             validator.validate(userName, this.machineCode);
+        }
+    }
+
+    public void stopValidationTask(){
+        this.result = null;
+        for(Validator validator : validators){
+            validator.stopValidation();
         }
     }
 
@@ -55,16 +64,27 @@ public class ValidationTask implements Observable, Observer {
 
     @Override
     public void update() {
-        boolean result = true;
+        boolean partialResult = true;
         for (Validator validator : this.validators) {
-            if (!validator.getResult()) {
-                log.info("Falló el validador: {}", validator.getClass().getName());
-                result = false;
-                break; // Detener la iteración si hay un fallo
+            //Verifico si existen validators que no finalizaron su validación
+            //Si hay alguno en proceso de validación no realizo el update en la ui
+            if(validator.getResult() == null){
+                return;
             }
+            //Si todos los validators tienen su resultado verifico si alguno falló
+            else{
+                if (!validator.getResult()) {
+                    log.info("Falló el validador: {}", validator.getClass().getName());
+                    partialResult = false;
+                    break; // Detener la iteración si hay un fallo
+                }
             log.info("Pasó el validador: {}", validator.getClass().getName());
+            }
         }
-        this.notifyObservers(result);
+        if(partialResult != result){
+            result = partialResult;
+            this.notifyObservers(result);
+        }
         log.info("\u001B[31mResultado de la validación es: {}\u001B[0m", result);
     }
 
