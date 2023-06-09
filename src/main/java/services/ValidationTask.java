@@ -81,7 +81,7 @@ public class ValidationTask implements Observable, Observer {
             log.info("Pasó el validador: {}", validator.getClass().getName());
             }
         }
-        if(partialResult != result){
+        if(result == null || partialResult != result){
             result = partialResult;
             this.notifyObservers(result);
         }
